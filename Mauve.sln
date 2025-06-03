@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{885626B5-94C4-4F5C-B1E0-BEBDD69B1F68}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mauve.Core", "src\Mauve.Core\Mauve.Core.csproj", "{0792A340-00E9-4418-8D1B-6FF7DBC37468}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mauve.RPA", "src\Mauve.RPA\Mauve.RPA.csproj", "{FA0E035A-8377-4F0C-A27C-F0C1F100F5CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mauve.AgentHost", "src\Mauve.AgentHost\Mauve.AgentHost.csproj", "{8724EC41-9B5E-47EE-AFF0-20A7E3DE00C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mauve.Tests", "src\Mauve.Tests\Mauve.Tests.csproj", "{99AF1D4A-A3F3-4046-A606-626490B61BA5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mauve.Workflows", "src\Mauve.Workflows\Mauve.Workflows.csproj", "{F268E9CF-CF90-4DE1-83F7-C093CFABB223}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0792A340-00E9-4418-8D1B-6FF7DBC37468}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0792A340-00E9-4418-8D1B-6FF7DBC37468}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0792A340-00E9-4418-8D1B-6FF7DBC37468}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0792A340-00E9-4418-8D1B-6FF7DBC37468}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA0E035A-8377-4F0C-A27C-F0C1F100F5CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA0E035A-8377-4F0C-A27C-F0C1F100F5CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA0E035A-8377-4F0C-A27C-F0C1F100F5CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA0E035A-8377-4F0C-A27C-F0C1F100F5CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8724EC41-9B5E-47EE-AFF0-20A7E3DE00C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8724EC41-9B5E-47EE-AFF0-20A7E3DE00C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8724EC41-9B5E-47EE-AFF0-20A7E3DE00C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8724EC41-9B5E-47EE-AFF0-20A7E3DE00C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99AF1D4A-A3F3-4046-A606-626490B61BA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99AF1D4A-A3F3-4046-A606-626490B61BA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99AF1D4A-A3F3-4046-A606-626490B61BA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99AF1D4A-A3F3-4046-A606-626490B61BA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F268E9CF-CF90-4DE1-83F7-C093CFABB223}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F268E9CF-CF90-4DE1-83F7-C093CFABB223}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F268E9CF-CF90-4DE1-83F7-C093CFABB223}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F268E9CF-CF90-4DE1-83F7-C093CFABB223}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0792A340-00E9-4418-8D1B-6FF7DBC37468} = {885626B5-94C4-4F5C-B1E0-BEBDD69B1F68}
+		{FA0E035A-8377-4F0C-A27C-F0C1F100F5CD} = {885626B5-94C4-4F5C-B1E0-BEBDD69B1F68}
+		{8724EC41-9B5E-47EE-AFF0-20A7E3DE00C4} = {885626B5-94C4-4F5C-B1E0-BEBDD69B1F68}
+		{99AF1D4A-A3F3-4046-A606-626490B61BA5} = {885626B5-94C4-4F5C-B1E0-BEBDD69B1F68}
+		{F268E9CF-CF90-4DE1-83F7-C093CFABB223} = {885626B5-94C4-4F5C-B1E0-BEBDD69B1F68}
+	EndGlobalSection
+EndGlobal

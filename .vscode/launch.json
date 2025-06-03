@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Run Mauve AgentHost",
+        "type": "coreclr",
+        "request": "launch",
+        "preLaunchTask": "build",
+        "program": "${workspaceFolder}/src/Mauve.AgentHost/bin/Debug/net8.0/Mauve.AgentHost.dll",
+        "args": [],
+        "cwd": "${workspaceFolder}/src/Mauve.AgentHost",
+        "stopAtEntry": false,
+        "console": "integratedTerminal"
+      }
+    ]
+  }
+  
