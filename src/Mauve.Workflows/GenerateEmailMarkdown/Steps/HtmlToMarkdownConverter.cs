@@ -45,7 +45,7 @@ public sealed class HtmlToMarkdownConverter(
 
         Examples of image references:
         {% for image in images %}
-        ![{{ image.alt }}](CID:{{ image.cid }})
+        ![{{ image.alt }}](CID/{{ image.cid }}.{{ image.fileExtension }})
         {% endfor %}
         {% endif %}
 

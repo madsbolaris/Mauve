@@ -28,7 +28,7 @@ public sealed class SaveMarkdownEmail(
         try
         {
             var convoDir = Path.Combine(_markdownBasePath, message.ConversationId ?? "unknown");
-            var imagesDir = Path.Combine(convoDir, "images");
+            var imagesDir = Path.Combine(convoDir, "cid");
 
             Directory.CreateDirectory(convoDir);
 
@@ -54,8 +54,7 @@ public sealed class SaveMarkdownEmail(
                     markdownImages.Add(new
                     {
                         path = Path.Combine("images", fileName),
-                        alt = img.Alt,
-                        summary = img.Summary
+                        alt = img.Alt
                     });
                 }
             }

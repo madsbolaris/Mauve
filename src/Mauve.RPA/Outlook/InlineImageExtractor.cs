@@ -10,9 +10,9 @@ public class InlineImageExtractor(
 {
     private readonly IAsyncPolicy _imageRetryPolicy = policyRegistry.Get<IAsyncPolicy>("ImageRetry");
 
-    public async Task<List<CidEmailImage>> ExtractInlineImagesAsync(IPage page, IElementHandle msg)
+    public async Task<List<OutlookEmailImage>> ExtractInlineImagesAsync(IPage page, IElementHandle msg)
     {
-        var result = new List<CidEmailImage>();
+        var result = new List<OutlookEmailImage>();
         var imgElements = await msg.QuerySelectorAllAsync("img");
 
         foreach (var img in imgElements)
@@ -48,7 +48,7 @@ public class InlineImageExtractor(
                     _ => ".bin"
                 };
 
-                result.Add(new CidEmailImage(cid, alt ?? string.Empty, new(src), bytes, ext));
+                result.Add(new OutlookEmailImage(cid, alt ?? string.Empty, new(src), bytes, ext));
             }
             catch (Exception ex)
             {

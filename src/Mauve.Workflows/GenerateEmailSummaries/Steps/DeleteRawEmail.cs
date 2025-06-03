@@ -25,7 +25,7 @@ public sealed class DeleteRawEmail(
         {
             var convoDir = Path.Combine(_rawBasePath, message.ConversationId ?? "unknown");
             var jsonPath = Path.Combine(convoDir, $"{message.MessageId}.json");
-            var imagesDir = Path.Combine(convoDir, "images");
+            var imagesDir = Path.Combine(convoDir, "cid");
 
             if (File.Exists(jsonPath))
             {

@@ -12,6 +12,6 @@ public class OutlookMessage(string conversationId)
     public List<Person>? From { get; set; }
     public List<Person>? To { get; set; }
     public List<Person>? Cc { get; set; }
-    public List<CidEmailImage>? Images { get; set; }
+    public List<OutlookEmailImage>? Images { get; set; }
     public string? Summary { get; set; }
 }
