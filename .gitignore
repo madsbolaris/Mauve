@@ -288,4 +288,4 @@ __pycache__/
 # Playwright
 playwright-user-data/
 
-appsettings2.json
+appsettings.json
