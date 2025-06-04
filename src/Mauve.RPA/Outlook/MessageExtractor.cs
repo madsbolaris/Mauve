@@ -6,6 +6,7 @@ using Mauve.Core.Models;
 using Polly;
 using Polly.Registry;
 using System.Text.RegularExpressions;
+using System.Runtime.CompilerServices;
 
 namespace Mauve.RPA.Outlook;
 
@@ -34,8 +35,8 @@ public class MessageExtractor(
     public async IAsyncEnumerable<OutlookMessage> ExtractMessagesAsync(
     IPage page,
     string convoId,
-    CancellationToken cancellationToken,
-    Func<string, string, DateTime, bool> shouldSkip)
+    Func<string, string, DateTime, bool> shouldSkip,
+    [EnumeratorCancellation]  CancellationToken cancellationToken)
     {
         try
         {
@@ -114,7 +115,7 @@ public class MessageExtractor(
 
             var to = await personExtractor.ExtractRecipientsAsync(page, blocks[0], "To:");
             var cc = await personExtractor.ExtractRecipientsAsync(page, blocks[0], "Cc:");
-            var images = await imageExtractor.ExtractInlineImagesAsync(page, blocks[0]);
+            var images = await imageExtractor.ExtractInlineImagesAsync(page, blocks[0], convoId);
 
             if (string.IsNullOrWhiteSpace(body))
             {

@@ -44,7 +44,7 @@ public sealed class DeleteRawEmail(
             {
                 foreach (var img in message.Images)
                 {
-                    var imagePath = Path.Combine(imagesDir, $"{img.Cid}{img.FileExtension}");
+                    var imagePath = Path.Combine(convoDir, img.Path);
                     if (File.Exists(imagePath))
                     {
                         try

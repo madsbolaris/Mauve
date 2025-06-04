@@ -32,15 +32,15 @@ public sealed class SaveMarkdownEmail(
 
             Directory.CreateDirectory(convoDir);
 
-            var markdownImages = new List<object>();
+            var markdownImages = new List<OutlookEmailImage>();
             if (message.Images?.Count > 0)
             {
                 Directory.CreateDirectory(imagesDir);
 
                 foreach (var img in message.Images)
                 {
-                    var fileName = $"{img.Cid}{img.FileExtension}";
-                    var originalPath = Path.Combine(_rawEmailBasePath, message.ConversationId!, "images", fileName);
+                    var fileName = img.Path;
+                    var originalPath = Path.Combine(_rawEmailBasePath, message.ConversationId!, fileName);
 
                     if (!File.Exists(originalPath))
                     {
@@ -48,14 +48,10 @@ public sealed class SaveMarkdownEmail(
                         continue;
                     }
 
-                    var destPath = Path.Combine(imagesDir, fileName);
+                    var destPath = Path.Combine(convoDir, fileName);
                     File.Copy(originalPath, destPath, overwrite: true);
 
-                    markdownImages.Add(new
-                    {
-                        path = Path.Combine("images", fileName),
-                        alt = img.Alt
-                    });
+                    markdownImages.Add(img);
                 }
             }
 

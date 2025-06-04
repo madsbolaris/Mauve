@@ -45,7 +45,7 @@ public sealed class HtmlToMarkdownConverter(
 
         Examples of image references:
         {% for image in images %}
-        ![{{ image.alt }}](CID/{{ image.cid }}.{{ image.fileExtension }})
+        ![{{ image.alt }}]({{ image.path }})
         {% endfor %}
         {% endif %}
 
@@ -76,8 +76,7 @@ public sealed class HtmlToMarkdownConverter(
             ["images"] = message.Images?.Select(img => new
             {
                 alt = img?.Alt ?? "",
-                cid = img?.Cid ?? "",
-                uri = img?.Uri ?? new Uri("about:blank")
+                path = img?.Path
             }).ToArray(),
             ["body"] = message.Body ?? ""
         };

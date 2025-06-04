@@ -1,19 +1,37 @@
+using Mauve.Core.Helpers;
 using Mauve.Core.Models;
+using Mauve.Core.Settings;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.Playwright;
 using Polly;
 using Polly.Registry;
 
 public class InlineImageExtractor(
+    IOptions<PathSettings> options,
     ILogger<InlineImageExtractor> logger,
     IReadOnlyPolicyRegistry<string> policyRegistry)
 {
+    private readonly string _baseDir = PathUtils.ExpandHome(options.Value.NewEmailStorageDirectory);
     private readonly IAsyncPolicy _imageRetryPolicy = policyRegistry.Get<IAsyncPolicy>("ImageRetry");
 
-    public async Task<List<OutlookEmailImage>> ExtractInlineImagesAsync(IPage page, IElementHandle msg)
+    public async Task<List<OutlookEmailImage>> ExtractInlineImagesAsync(
+        IPage page,
+        IElementHandle msg,
+        string conversationId,
+        CancellationToken cancellationToken = default)
     {
         var result = new List<OutlookEmailImage>();
         var imgElements = await msg.QuerySelectorAllAsync("img");
+
+        var folder = Path.Combine(_baseDir, conversationId);
+
+        // Ensure base folder exists
+        Directory.CreateDirectory(folder);
+
+        // Ensure image directory exists
+        var imageDir = Path.Combine(folder, "cid");
+        Directory.CreateDirectory(imageDir);
 
         foreach (var img in imgElements)
         {
@@ -48,11 +66,16 @@ public class InlineImageExtractor(
                     _ => ".bin"
                 };
 
-                result.Add(new OutlookEmailImage(cid, alt ?? string.Empty, new(src), bytes, ext));
+                var filename = $"{cid}{ext}";
+                var fullPath = Path.Combine(imageDir, filename);
+                await File.WriteAllBytesAsync(fullPath, bytes, cancellationToken);
+                logger.LogDebug("Saved image to {Path}", fullPath);
+
+                result.Add(new OutlookEmailImage($"cid/{filename}", alt ?? string.Empty));
             }
             catch (Exception ex)
             {
-                logger.LogWarning(ex, "Failed to download or process image with CID {Cid} in conversation", cid);
+                logger.LogWarning(ex, "Failed to download or save image with CID {Cid}", cid);
             }
         }
 

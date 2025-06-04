@@ -24,22 +24,7 @@ public class MessagePersister(
         {
             var folder = Path.Combine(_baseDir, message.ConversationId);
             Directory.CreateDirectory(folder);
-
-            if (message.Images?.Count > 0)
-            {
-                var imageDir = Path.Combine(folder, "images");
-                Directory.CreateDirectory(imageDir);
-
-                foreach (var img in message.Images)
-                {
-                    var fullPath = Path.Combine(imageDir, $"{img.Cid}{img.FileExtension}");
-                    await _fileRetryPolicy.ExecuteAsync(() =>
-                        File.WriteAllBytesAsync(fullPath, img.Bytes, cancellationToken));
-                    logger.LogDebug("Saved image to {Path}", fullPath);
-                    img.Bytes = null!;
-                }
-            }
-
+            
             var jsonPath = Path.Combine(folder, $"{message.MessageId}.json");
             var json = JsonSerializer.Serialize(message, jsonOptions);
 

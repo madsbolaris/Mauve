@@ -6,7 +6,7 @@
         "type": "coreclr",
         "request": "launch",
         "preLaunchTask": "build",
-        "program": "${workspaceFolder}/src/Mauve.AgentHost/bin/Debug/net8.0/Mauve.AgentHost.dll",
+        "program": "${workspaceFolder}/src/Mauve.AgentHost/bin/Debug/net9.0/Mauve.AgentHost.dll",
         "args": [],
         "cwd": "${workspaceFolder}/src/Mauve.AgentHost",
         "stopAtEntry": false,

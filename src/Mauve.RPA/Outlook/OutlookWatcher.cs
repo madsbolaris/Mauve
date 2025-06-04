@@ -32,7 +32,10 @@ public class OutlookWatcher(
 
     private async Task RunSessionAsync(CancellationToken cancellationToken)
     {
+        var sessionStart = DateTime.UtcNow;
+
         using var playwright = await Playwright.CreateAsync();
+
         var browser = await playwright.Chromium.LaunchPersistentContextAsync("playwright-user-data", new()
         {
             Headless = false,
@@ -41,22 +44,24 @@ public class OutlookWatcher(
         });
 
         var page = await browser.NewPageAsync();
-        await pageHelpers.RefreshPageAsync(page); // already uses internal retry policy
+        await pageHelpers.RefreshPageAsync(page);
 
         while (!cancellationToken.IsCancellationRequested)
         {
             try
             {
-                var next = await extractor.FindNextConversationAsync(page, _processed.ToHashSet(), cancellationToken);
+                // periodically reset browser context (e.g., every 30 mins)
+                if ((DateTime.UtcNow - sessionStart) > TimeSpan.FromMinutes(30))
+                    break;
+
+                var next = await extractor.FindNextConversationAsync(page, [.. _processed], cancellationToken);
                 if (next is null) continue;
 
                 var convoId = await next.GetAttributeAsync("data-convid");
                 if (string.IsNullOrWhiteSpace(convoId)) continue;
 
-                await foreach (var msg in extractor.ExtractMessagesAsync(page, convoId, cancellationToken, persister.ShouldSkip))
-                {
+                await foreach (var msg in extractor.ExtractMessagesAsync(page, convoId, persister.ShouldSkip, cancellationToken))
                     await persister.SaveAsync(msg, cancellationToken);
-                }
 
                 if (await mover.MoveToProcessedAsync(page, convoId))
                 {
@@ -71,20 +76,14 @@ public class OutlookWatcher(
             {
                 logger.LogWarning(ex, "[OutlookWatcher] Failed to process conversation. Refreshing page...");
 
-                try
-                {
-                    await page.CloseAsync();
-                }
-                catch (Exception closeEx)
-                {
-                    logger.LogWarning(closeEx, "[OutlookWatcher] Failed to close page");
-                }
+                try { await page.CloseAsync(); } catch { }
 
                 page = await browser.NewPageAsync();
-                await pageHelpers.RefreshPageAsync(page); // handles retry internally
+                await pageHelpers.RefreshPageAsync(page);
             }
         }
 
-        await page.CloseAsync();
+        await browser.CloseAsync(); // full reset here
     }
+
 }
